@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="430.0" prefWidth="567.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegistrationController">
+   <children>
+      <VBox prefHeight="430.0" prefWidth="567.0">
+         <children>
+            <Label fx:id="information" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="568.0" textAlignment="CENTER" />
+            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="34.0" prefWidth="8.0" />
+            <HBox prefHeight="307.0" prefWidth="480.0">
+               <children>
+                  <Separator opacity="0.0" prefHeight="17.0" prefWidth="30.0" />
+                  <GridPane prefHeight="307.0" prefWidth="276.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="223.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="0.0" prefWidth="94.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="last name" />
+                        <Label text="first name" GridPane.rowIndex="2" />
+                        <Label text="passphrase" GridPane.rowIndex="4" />
+                        <TextField fx:id="lastname" prefHeight="26.0" prefWidth="156.0" GridPane.rowIndex="1" />
+                        <TextField fx:id="firstname" prefHeight="26.0" prefWidth="161.0" GridPane.rowIndex="3" />
+                        <TextField fx:id="passphrase" GridPane.rowIndex="5" />
+                        <Button fx:id="close" mnemonicParsing="false" onAction="#closeRegistration" prefHeight="32.0" prefWidth="143.0" style="-fx-background-color: blue;" text="Close" textFill="WHITE" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="13.0" />
+                           </font></Button>
+                     </children>
+                  </GridPane>
+                  <GridPane prefHeight="315.0" prefWidth="221.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.0" minWidth="10.0" prefWidth="252.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="0.0" prefWidth="0.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="username" GridPane.rowIndex="1" />
+                        <Label text="username" />
+                        <Label text="password" GridPane.rowIndex="2" />
+                        <Label text="retype password" GridPane.rowIndex="4" />
+                        <Button fx:id="saveButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#submitInformation" prefHeight="33.0" prefWidth="156.0" style="-fx-background-color: blue;" text="Save" textFill="WHITE" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Button>
+                        <PasswordField fx:id="password" GridPane.rowIndex="3" />
+                        <PasswordField fx:id="password_retyped" GridPane.rowIndex="5" />
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

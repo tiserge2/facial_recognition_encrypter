@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="481.0" prefWidth="736.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainWindowController">
+  <children>
+      <TitledPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" />
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="399.0" prefWidth="676.0" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox layoutX="5.0" layoutY="7.0" prefHeight="418.0" prefWidth="728.0">
+               <children>
+                  <VBox prefHeight="404.0" prefWidth="367.0">
+                     <children>
+                        <VBox prefHeight="340.0" prefWidth="358.0">
+                           <children>
+                              <Label style="-fx-font-size: 15px;" text="List of folder" />
+                              <TableView fx:id="listOfFolder" prefHeight="276.0" prefWidth="358.0">
+                                <columns>
+                                    <TableColumn fx:id="id_folder" prefWidth="29.0" text="id" visible="false" />
+                                  <TableColumn fx:id="name_folder" prefWidth="74.0" text="Name" />
+                                  <TableColumn fx:id="fullpath_folder" text="Full Path" />
+                                    <TableColumn fx:id="modified_folder" prefWidth="106.0" text="Modified" />
+                                    <TableColumn fx:id="iscrypted_folder" prefWidth="143.0" text="Is Crypted" />
+                                </columns>
+                              </TableView>
+                              <HBox alignment="CENTER" prefHeight="79.0" prefWidth="365.0">
+                                 <children>
+                                    <Button fx:id="addFolderButton" mnemonicParsing="false" onAction="#addFolder" prefHeight="30.0" prefWidth="61.0" style="-fx-background-color: blue; -fx-text-fill: white;" stylesheets="@style.css" text="Add" />
+                                    <Separator opacity="0.0" prefHeight="6.0" prefWidth="20.0" />
+                                    <Button fx:id="encrypt" mnemonicParsing="false" onAction="#encryptFolder" prefHeight="32.0" prefWidth="74.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Encrypt" />
+                                    <Separator opacity="0.0" prefHeight="4.0" prefWidth="32.0" />
+                                    <Button fx:id="decryptButton" mnemonicParsing="false" onAction="#decryptFolder" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Decrypt" />
+                                    <Separator opacity="0.0" prefHeight="0.0" prefWidth="21.0" />
+                                    <Button fx:id="removeFolderButton" mnemonicParsing="false" onAction="#removeFolder" prefHeight="32.0" prefWidth="72.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Remove" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="18.0" prefWidth="6.0" />
+                        <Label style="-fx-font-size: 15;" text="Recent activities" />
+                        <ListView prefHeight="112.0" prefWidth="365.0" />
+                     </children>
+                  </VBox>
+                  <Separator opacity="0.0" prefHeight="0.0" prefWidth="32.0" />
+                  <VBox alignment="TOP_RIGHT" prefHeight="391.0" prefWidth="335.0">
+                     <children>
+                        <VBox prefHeight="218.0" prefWidth="332.0">
+                           <children>
+                              <Label style="-fx-font-size: 15;" text="List of users" />
+                              <TableView fx:id="listOfPerson" prefHeight="219.0" prefWidth="246.0">
+                                <columns>
+                                    <TableColumn fx:id="id_person" prefWidth="75.0" text="id" visible="false" />
+                                  <TableColumn fx:id="lastname_person" prefWidth="72.0" text="Lastname" />
+                                  <TableColumn fx:id="firstname_person" prefWidth="62.0" text="Firstname" />
+                                    <TableColumn fx:id="hasFace_person" prefWidth="123.0" text="Face" />
+                                </columns>
+                              </TableView>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="addUserButton" minWidth="43.0" mnemonicParsing="false" onAction="#addUser" prefHeight="32.0" prefWidth="84.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="New User" />
+                                    <Separator opacity="0.0" prefHeight="12.0" prefWidth="3.0" />
+                                    <Button disable="true" minWidth="48.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="48.0" text="E" />
+                                    <Separator opacity="0.0" prefHeight="4.0" prefWidth="0.0" />
+                                    <Button disable="true" minWidth="47.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="47.0" text="R" />
+                                    <Separator opacity="0.0" prefHeight="0.0" prefWidth="0.0" />
+                                    <Button fx:id="addFaceButton" mnemonicParsing="false" onAction="#addFace" prefHeight="32.0" prefWidth="91.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Add Face" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <opaqueInsets>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </opaqueInsets>
+                        </VBox>
+                        <Separator opacity="0.0" orientation="VERTICAL" prefHeight="191.0" prefWidth="327.0" />
+                        <Label fx:id="connectedUser" alignment="TOP_RIGHT" contentDisplay="RIGHT" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

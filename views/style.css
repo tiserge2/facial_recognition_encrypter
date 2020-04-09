@@ -1,0 +1,17 @@
+  -fx-background: white;
+  -fx-text-fill: -text-light;
+  -fx-prompt-text-fill: rgba(0,0,0,.3);
+
+  -text-disabled: -text-disabled-light;
+  -background-disabled:rgba(0,0,0,.12);
+  -background-fill: -text-light;
+
+  -flat-button-hover-background: rgba(#999999,.2);
+  -flat-button-pressed-background: rgba(#999999,.4);
+  -flat-button-disabled-fill: rgba(#000000,.26);
+
+#text_field_box {
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+}

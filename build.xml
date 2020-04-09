@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<project name="LockDat encrypt with face" default="default" basedir="."
+  xmlns:fx="javafx:com.sun.javafx.tools.ant">
+ 
+  <property name="JAVA_HOME" value="/usr/lib/jvm/java-1.8.0-openjdk-amd64"/>
+  <property name="build.src.dir" value="src"/>
+  <property name="views" value="views"/>
+  <property name="build.classes.dir" value="classes"/>
+  <property name="build.resources.dir" value="views"/>
+  <property name="build.dist.dir" value="dist"/>
+  <property name="lib.dir" value="/home/tch10tch10/Documents/opencv-4.0.1/build/bin/" />
+  <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+  </path>
+  <path id="classpath1">
+        <fileset dir="/home/tch10tch10/Documents" includes="mysql-connector-java-5.1.47.jar"/>
+  </path>
+  <path id="classpath2">
+        <fileset dir="/home/tch10tch10/eclipse-workspace/facial_recognition_encrypter/src/views" >
+        	<include name="*.fxml"/>
+        </fileset>
+  </path>
+ 
+  <target name="default" depends="clean,compile">
+ 
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+      uri="javafx:com.sun.javafx.tools.ant"
+      classpath="${JAVA_HOME}/lib/ant-javafx.jar"/>
+ 
+      <fx:application id="LockDatId"
+        name="LockDatAPP"
+        mainClass="main.Main"/>
+ 
+      <fx:resources id="appRes">
+        <fx:fileset dir="${build.dist.dir}" includes="LockDat.jar"/>
+      </fx:resources>
+ 
+      <fx:jar destfile="${build.dist.dir}/LockDat.jar">
+        <fx:application refid="LockDatId"/>
+        <fx:resources refid="appRes"/>
+        <fileset dir="${build.classes.dir}"/>
+        <fileset dir="${build.resources.dir}"/>
+        <fileset dir="/home/tch10tch10/Documents" includes="mysql-connector-java-5.1.47.jar" />
+        <fileset dir="/home/tch10tch10/Documents" includes="charm-glisten-4.4.1.jar" />
+      	  <manifest>
+      	      <attribute name = "Main-Class" value = "main.Main"/>
+      	  </manifest>
+      </fx:jar>
+      
+  	<java  fork="true" classname="main.Main">
+  		<sysproperty key="java.library.path" path="/home/tch10tch10/Documents/opencv-4.0.1/build/lib"/>
+  		<classpath>
+                <path refid="classpath"/>
+                <path refid="classpath1" />
+                <path location="dist/LockDat.jar" />
+        </classpath>
+  	</java>
+      <fx:deploy width="300" height="250"
+        outdir="." embedJNLP="true"
+        outfile="helloworld"
+      	nativeBundles="all"
+ 		>
+        <fx:application refId="LockDatId"/>
+ 
+        <fx:resources refid="appRes"/>
+ 
+      	<fx:info title="Associate sos with lockdat"
+      	         vendor="Sergio Suzerain"
+      	         description="A Demo of File Associations for Java Packager"
+      	         category="Demos"
+      	         license="3 Clause BSD">
+      	    <fx:association icon="images/lock.png" extension="sos" mimetype="application/octet-stream"  description="crypted file"/>
+        </fx:info>
+ 
+      </fx:deploy>
+ 
+  </target>
+ 
+  <target name="clean">
+    <mkdir dir="${build.classes.dir}"/>
+    <mkdir dir="${build.dist.dir}"/>
+
+    <delete>
+      <fileset dir="${build.classes.dir}" includes="**/*" excludes="views/*"/>
+      <fileset dir="${build.dist.dir}" includes="**/*"/>
+    </delete>
+ 
+  </target>
+ 
+  <target name="compile" depends="clean">
+ 
+    <javac includeantruntime="false"
+      srcdir="${build.src.dir}"
+      destdir="${build.classes.dir}"
+      fork="yes"
+      executable="${JAVA_HOME}/bin/javac"
+      source="1.8"
+      debug="on"
+      classpathref="classpath">
+    </javac>
+  </target>
+ 
+</project>
