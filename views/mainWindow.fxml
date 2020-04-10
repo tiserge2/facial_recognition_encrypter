@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -28,20 +30,48 @@
                                 <columns>
                                     <TableColumn fx:id="id_folder" prefWidth="29.0" text="id" visible="false" />
                                   <TableColumn fx:id="name_folder" prefWidth="74.0" text="Name" />
+                                    <TableColumn fx:id="iscrypted_folder" prefWidth="143.0" text="Is Crypted" />
                                   <TableColumn fx:id="fullpath_folder" text="Full Path" />
                                     <TableColumn fx:id="modified_folder" prefWidth="106.0" text="Modified" />
-                                    <TableColumn fx:id="iscrypted_folder" prefWidth="143.0" text="Is Crypted" />
                                 </columns>
                               </TableView>
                               <HBox alignment="CENTER" prefHeight="79.0" prefWidth="365.0">
                                  <children>
-                                    <Button fx:id="addFolderButton" mnemonicParsing="false" onAction="#addFolder" prefHeight="30.0" prefWidth="61.0" style="-fx-background-color: blue; -fx-text-fill: white;" stylesheets="@style.css" text="Add" />
+                                    <Button fx:id="addFolderButton" mnemonicParsing="false" onAction="#addFolder" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue; -fx-text-fill: white;" stylesheets="@style.css">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@add%20(2).png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="6.0" prefWidth="20.0" />
-                                    <Button fx:id="encrypt" mnemonicParsing="false" onAction="#encryptFolder" prefHeight="32.0" prefWidth="74.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Encrypt" />
+                                    <Button fx:id="encrypt" minWidth="48.0" mnemonicParsing="false" onAction="#encryptFolder" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue; -fx-text-fill: white;">
+                                       <graphic>
+                                          <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@encrypt.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="4.0" prefWidth="32.0" />
-                                    <Button fx:id="decryptButton" mnemonicParsing="false" onAction="#decryptFolder" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Decrypt" />
+                                    <Button fx:id="decryptButton" mnemonicParsing="false" onAction="#decryptFolder" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue; -fx-text-fill: white;">
+                                       <graphic>
+                                          <ImageView fitHeight="61.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@lock.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="0.0" prefWidth="21.0" />
-                                    <Button fx:id="removeFolderButton" mnemonicParsing="false" onAction="#removeFolder" prefHeight="32.0" prefWidth="72.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Remove" />
+                                    <Button fx:id="removeFolderButton" mnemonicParsing="false" onAction="#removeFolder" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue; -fx-text-fill: white;">
+                                       <graphic>
+                                          <ImageView fitHeight="63.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@minus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                  </children>
                               </HBox>
                            </children>
@@ -60,20 +90,48 @@
                               <TableView fx:id="listOfPerson" prefHeight="219.0" prefWidth="246.0">
                                 <columns>
                                     <TableColumn fx:id="id_person" prefWidth="75.0" text="id" visible="false" />
-                                  <TableColumn fx:id="lastname_person" prefWidth="72.0" text="Lastname" />
-                                  <TableColumn fx:id="firstname_person" prefWidth="62.0" text="Firstname" />
-                                    <TableColumn fx:id="hasFace_person" prefWidth="123.0" text="Face" />
+                                  <TableColumn fx:id="lastname_person" prefWidth="118.0" text="Lastname" />
+                                  <TableColumn fx:id="firstname_person" prefWidth="135.0" text="Firstname" />
+                                    <TableColumn fx:id="hasFace_person" prefWidth="79.0" text="Face" />
                                 </columns>
                               </TableView>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="addUserButton" minWidth="43.0" mnemonicParsing="false" onAction="#addUser" prefHeight="32.0" prefWidth="84.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="New User" />
+                                    <Button fx:id="addUserButton" minWidth="43.0" mnemonicParsing="false" onAction="#addUser" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue; -fx-text-fill: white;">
+                                       <graphic>
+                                          <ImageView fitHeight="34.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@add%20(1).png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="12.0" prefWidth="3.0" />
-                                    <Button disable="true" minWidth="48.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="48.0" text="E" />
+                                    <Button minWidth="48.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue;">
+                                       <graphic>
+                                          <ImageView fitHeight="29.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@edit.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="4.0" prefWidth="0.0" />
-                                    <Button disable="true" minWidth="47.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="47.0" text="R" />
+                                    <Button minWidth="47.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue;">
+                                       <graphic>
+                                          <ImageView fitHeight="95.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@remove-user.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="0.0" prefWidth="0.0" />
-                                    <Button fx:id="addFaceButton" mnemonicParsing="false" onAction="#addFace" prefHeight="32.0" prefWidth="91.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Add Face" />
+                                    <Button fx:id="addFaceButton" mnemonicParsing="false" onAction="#addFace" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue; -fx-text-fill: white;">
+                                       <graphic>
+                                          <ImageView fitHeight="44.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@identity.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                  </children>
                               </HBox>
                            </children>
