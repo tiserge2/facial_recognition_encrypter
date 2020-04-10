@@ -43,7 +43,7 @@ public class User {
 	
 	public static String getPassphrase(String username) {
 		// TODO Auto-generated method stub
-		String query = "SELECT passphrase from lockdat.user,lockdat.personne WHERE lockdat.user.idpersonne = lockdat.personne.idpersonne AND lockdat.user.username='"+ username +"';";
+		String query = "SELECT passphrase from user,personne WHERE user.idpersonne = personne.idpersonne AND user.username='"+ username +"';";
 		Database db = new Database();
 		return (String) db.getEntry(query).get(0).get("passphrase");
 	}

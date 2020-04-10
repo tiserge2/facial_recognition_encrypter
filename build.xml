@@ -13,8 +13,8 @@
   <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
   </path>
-  <path id="classpath1">
-        <fileset dir="/home/tch10tch10/Documents" includes="mysql-connector-java-5.1.47.jar"/>
+  <path id="classpath3">
+	    <fileset dir="/home/tch10tch10/Downloads" includes="sqlite-jdbc-3.30.1.jar"/>
   </path>
   <path id="classpath2">
         <fileset dir="/home/tch10tch10/eclipse-workspace/facial_recognition_encrypter/src/views" >
@@ -41,7 +41,7 @@
         <fx:resources refid="appRes"/>
         <fileset dir="${build.classes.dir}"/>
         <fileset dir="${build.resources.dir}"/>
-        <fileset dir="/home/tch10tch10/Documents" includes="mysql-connector-java-5.1.47.jar" />
+      	<fileset dir="/home/tch10tch10/Documents" includes="sqlite-jdbc-3.7.2.jar" />
         <fileset dir="/home/tch10tch10/Documents" includes="charm-glisten-4.4.1.jar" />
       	  <manifest>
       	      <attribute name = "Main-Class" value = "main.Main"/>
@@ -52,7 +52,7 @@
   		<sysproperty key="java.library.path" path="/home/tch10tch10/Documents/opencv-4.0.1/build/lib"/>
   		<classpath>
                 <path refid="classpath"/>
-                <path refid="classpath1" />
+  				<path refid="classpath3" />
                 <path location="dist/LockDat.jar" />
         </classpath>
   	</java>

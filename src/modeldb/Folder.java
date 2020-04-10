@@ -26,20 +26,20 @@ public class Folder {
 
 	public static boolean removeFolder(String folderId) {
 		// TODO Auto-generated method stub
-		String query = "DELETE FROM lockdat.folder WHERE idfolder="+ Integer.valueOf(folderId)+"";
+		String query = "DELETE FROM folder WHERE idfolder="+ Integer.valueOf(folderId)+"";
 		Database db = new Database();
 		return db.addEntry(query);
 	}
 	
 	public static boolean setZippedAndPath(String folderId, String path, String cryptedName) {
-		String query = "UPDATE lockdat.folder SET iscrypted='Yes', zippedname='" + path + "', cryptedName='"+ cryptedName +"' WHERE idfolder=" + Integer.parseInt(folderId) + "";
+		String query = "UPDATE folder SET iscrypted='Yes', zippedname='" + path + "', cryptedName='"+ cryptedName +"' WHERE idfolder=" + Integer.parseInt(folderId) + "";
 		Database db = new Database();
 		return db.addEntry(query);
 	}
 
 	public static boolean setDecrypted(String folderId) {
 		// TODO Auto-generated method stub
-		String query = "UPDATE lockdat.folder SET iscrypted='No' WHERE idfolder='" + folderId + "'";
+		String query = "UPDATE folder SET iscrypted='No' WHERE idfolder='" + folderId + "'";
 		Database db = new Database();
 		return db.addEntry(query);
 	}
