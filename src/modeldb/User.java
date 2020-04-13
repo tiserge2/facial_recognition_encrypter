@@ -51,4 +51,18 @@ public class User {
 	public static void main(String argv[]) {
 		System.out.println(getPassphrase("tiserge2"));
 	}
+
+	public static boolean removeUser(String connectedUser) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		String query1 = "DELETE FROM user WHERE username='" + connectedUser + "'";
+		return db.addEntry(query1);
+	}
+
+	public static boolean hasUser() {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		String query1 = "SELECT * FROM user";
+		return db.getEntry(query1).size() > 0;
+	}
 }

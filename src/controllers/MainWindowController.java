@@ -1,10 +1,13 @@
 package controllers;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,7 +23,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
@@ -32,6 +38,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modeldb.Folder;
 import modeldb.Person;
+import modeldb.User;
 import utils.PopInformation;
 import utils.StaticVariable;
 //import com.gluonhq.charm.glisten.control.AppBar;
@@ -49,7 +56,8 @@ public class MainWindowController implements Initializable {
 	 * This is the main element in the folder list view
 	 */
 	private  ObservableList<FolderModel> dataOnFolder = FXCollections.observableArrayList();
-
+	
+	// all the buttons *****
 	@FXML
 	private Button addFolderButton;
 	
@@ -58,6 +66,17 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	private Button decryptButton;
+	
+	@FXML
+	private Button addUser;
+	
+	@FXML
+	private Button addFaceButton;
+	
+	@FXML
+	private Button removeUserButton;
+	
+	// all the buttons *****
 	
 	@FXML
 	private TableView<FolderModel> listOfFolder;
@@ -84,9 +103,6 @@ public class MainWindowController implements Initializable {
 	private  ObservableList<PersonModel> dataOnPerson = FXCollections.observableArrayList();
 	
 	@FXML
-	private Button addUser;
-	
-	@FXML
 	private TableView<PersonModel> listOfPerson;
 	
 	@FXML
@@ -101,9 +117,129 @@ public class MainWindowController implements Initializable {
 	@FXML
 	private TableColumn<PersonModel, String> hasFace_person;
 	
-	@FXML
-	private Button addFaceButton;
+	// triggered functions ******8
 	
+	@FXML 
+	protected void removeUser() throws IOException {
+		//let's check is there is a selected user
+		if(this.listOfPerson.getSelectionModel().isEmpty()) {
+			PopInformation.showInformation("Error", "Please select the desired user", "Select User");
+		} else {
+			//let's check if the selected user is the same as the connected user
+			if(checkUserIdentity()) {
+				//let's check if the user has folder crypted
+				if(Person.hasFolderCrypted(StaticVariable.connectedUser)) {
+					PopInformation.showInformation("Error", "You can't remove your user, you have encrypted folders.", "User folder");
+				} else {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Confirmation Dialog");
+					alert.setHeaderText("Remove user");
+					alert.setContentText("Do you really want to remove your user?");
+
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK){
+					    // ... user chose OK
+						//let's remove folder added by this user
+						if(Folder.removeFolders(StaticVariable.connectedUser)) {
+							System.out.println("All folders removed successfully");
+							//update views
+							this.listOfFolder.getItems().clear();
+			            	this.fillFolderList();
+			            	this.listOfFolder.refresh();
+			            	
+			            	//remove the faces
+			            	if(Person.hasFaceRegistered(StaticVariable.connectedUser)) {
+			            		try {
+									if(massDeletion(StaticVariable.connectedUser)) {
+										System.out.println("All photos deleted successfully");
+										//lets remove datas about user in db
+										if(Person.removePerson(Integer.valueOf(this.listOfPerson.getSelectionModel().getSelectedItem().getIdPerson()))) {
+											System.out.println("Person removed successfully");
+											if(User.removeUser(StaticVariable.connectedUser)) {
+												System.out.println("User removed successfully");
+												System.out.println("Closing main");
+												closeMainWindow();
+												if(User.hasUser()) {
+													System.out.println("Openning login");
+													openLoginWindow();
+												} else {
+													System.out.println("Openning registration");
+													OpenRegistrationWindow();
+												}
+											} else {
+												System.out.println("Cannot remove user");
+											}
+										} else {
+											System.out.println("Cannot remove personne");
+										}
+									} else {
+										System.out.println("Cannot remove the photos");
+									}
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+			            	} else {
+			            		//lets remove datas about user in db
+			            		if(Person.removePerson(Integer.valueOf(this.listOfPerson.getSelectionModel().getSelectedItem().getIdPerson()))) {
+			            			System.out.println("Person removed successfully");
+			            			if(User.removeUser(StaticVariable.connectedUser)) {
+			            				System.out.println("User removed successfully");
+			            				System.out.println("Closing main");
+										closeMainWindow();
+										if(User.hasUser()) {
+											System.out.println("Openning login");
+											openLoginWindow();
+										} else {
+											System.out.println("Openning registration");
+											OpenRegistrationWindow();
+										}
+									} else {
+										System.out.println("Cannot remove user");
+									}
+								} else {
+									System.out.println("Cannot remove personne");
+								}
+			            	}
+						} else {
+							System.out.println("Cannot remove folders");
+							alert.close();
+							PopInformation.showInformation("Error", "Problem, please contact admin", "User remove");
+						}
+					} else {
+					    // ... user chose CANCEL or closed the dialog
+						alert.close();
+					}
+				}
+			} else {
+				PopInformation.showInformation("Error", "You can't remove another user", "Select User");
+			}
+		}
+	}
+	
+	public void OpenRegistrationWindow() throws IOException {
+		// TODO Auto-generated method stub
+		URL location = getClass().getResource("/registrationForm.fxml");
+		FXMLLoader fxmlLoader = new FXMLLoader(location);
+		Pane root = (Pane)fxmlLoader.load();
+//		
+		Stage newWindow = new Stage();
+
+//		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("/views/feedModelCamera.fxmll"));
+//		Parent root = loader.load();
+		
+		newWindow.setTitle("Create new user");
+		newWindow.setScene(new Scene(root));
+		newWindow.initOwner(null);
+		
+		newWindow.initModality(Modality.APPLICATION_MODAL); 
+//		FeedModelCameraController controller = loader.getController();
+		newWindow.show();
+	}
+
 	@FXML
 	protected void removeFolder() {
 		if(this.listOfFolder.getSelectionModel().isEmpty()) {
@@ -133,6 +269,13 @@ public class MainWindowController implements Initializable {
 		String selectedUser = this.listOfFolder.getSelectionModel().getSelectedItem().getUsername();
 		System.out.println("Selected user: " + selectedUser);
 		return selectedUser.equals(StaticVariable.connectedUser);
+	}
+	
+	private boolean checkUserIdentity() {
+		String connectedUser = StaticVariable.connectedUser;
+		//selected user
+		String selectedUser = this.listOfPerson.getSelectionModel().getSelectedItem().getUsername();
+		return selectedUser.equals(connectedUser);
 	}
 
 	@FXML
@@ -456,7 +599,52 @@ public class MainWindowController implements Initializable {
 		this.listOfPerson.setItems(dataOnPerson);
 	}
 	
-	public static void main(String argv[]) {
+	public static  boolean massDeletion(String file) throws IOException, InterruptedException {
+		System.out.println("Deleting");
+		String path = System.getProperty("user.dir") + "/imagedb";
+		System.setProperty("user.dir", path);
+		String[] command = {"/bin/sh", "-c", "rm -v *" + file + "*"};
+		File dir = new File(path);
+		Runtime  r = Runtime.getRuntime();
+		Process p = r.exec(command, null, dir);
+		final int returnCode = p.waitFor();
+		System.out.println("Deleting from folder: " + path);
+		System.out.println("Deleting command: " + command);
+		System.out.println("Value of return: " + returnCode);
 		
+		BufferedReader is = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String line;
+		
+		while((line = is.readLine()) != null) {
+			System.out.println( line);
+		}
+		return returnCode == 0;
+	}
+	
+	public void closeMainWindow() {
+		((Stage)(removeUserButton).getScene().getWindow()).close();
+	}
+	
+	public void openLoginWindow() throws IOException {
+		URL location = getClass().getResource("/loginForm.fxml");
+		FXMLLoader fxmlLoader = new FXMLLoader(location);
+		Pane root = (Pane)fxmlLoader.load();
+//		
+		Stage newWindow = new Stage();
+
+//		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("/views/feedModelCamera.fxmll"));
+//		Parent root = loader.load();
+		
+		newWindow.setTitle("Login");
+		newWindow.setScene(new Scene(root));
+		newWindow.initOwner(null);
+		
+//		newWindow.initModality(Modality.APPLICATION_MODAL); 
+//		FeedModelCameraController controller = loader.getController();
+		newWindow.show();
+	}
+	
+	public static void main(String argv[]) throws IOException, InterruptedException {
+		massDeletion("rara");
 	}
 }

@@ -33,6 +33,13 @@ public class Person {
 		String query = "UPDATE personne SET isfaceregistered='Yes' WHERE personne.idpersonne='"+ idpersonne +"'";
 		return db.addEntry(query);
 	}
+	
+	public static boolean hasFolderCrypted(String username) {
+		Database db = new Database();
+		String query1 = "SELECT * from folder WHERE folder.username='" + username + "' AND folder.iscrypted='Yes'";
+		List<Map<String, Object>> result = db.getEntry(query1);
+		return result.size() > 0;
+	}
 
 	public static boolean hasFaceRegistered(String connectedUser) {
 		// TODO Auto-generated method stub
@@ -54,5 +61,11 @@ public class Person {
 	public static void main(String argv[]) {
 		System.out.println(Person.hasFaceRegistered("gorse"));
 	}
-	
+
+	public static boolean removePerson(int idPersonne) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		String query1 = "DELETE FROM personne WHERE idpersonne=" + idPersonne + "";
+		return db.addEntry(query1);
+	}
 }

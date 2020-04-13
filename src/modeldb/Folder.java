@@ -43,4 +43,11 @@ public class Folder {
 		Database db = new Database();
 		return db.addEntry(query);
 	}
+	
+	public static boolean removeFolders(String connectedUser) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		String query1 = "DELETE FROM folder WHERE username='" + connectedUser + "'";
+		return db.addEntry(query1);
+	}
 }

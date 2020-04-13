@@ -61,7 +61,7 @@ public class Main extends Application{
 			System.out.println("We have user registered yet");
 			//going to open the login form
 			openLoginWindow();
-		}
+		}		
 	}
 
 	private void openRegisterWindow() throws IOException {
@@ -82,6 +82,5 @@ public class Main extends Application{
 		newWindow.initModality(Modality.APPLICATION_MODAL); 
 //		FeedModelCameraController controller = loader.getController();
 		newWindow.showAndWait();
-		openLoginWindow();
 	}
 }
