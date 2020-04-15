@@ -8,6 +8,7 @@ public class StaticVariable {
 	public static String connectedUser_fisrtname 	= "";
 	public static String connectedUser_lastname 	= "";
 	public static String connectedUser_passphrase	= "";
+	public static String registration_state			= "";
 	public static boolean recognized				= false;
 	public static String message					= "";
 	public static boolean registeredFace			= false;

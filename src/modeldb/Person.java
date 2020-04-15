@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import database.Database;
+import utils.StaticVariable;
 
 public class Person {
 	public static boolean addPerson(String lastname, String firstName) {
@@ -57,6 +58,22 @@ public class Person {
 		}
 	}
 	
+	public static String getPersonLastname(String username) {
+		Database db = new Database();
+		String query1 = "SELECT idpersonne FROM user WHERE username='" + username + "'";
+		int idpersonne =  Integer.valueOf((String) db.getEntry(query1).get(0).get("idpersonne"));
+		String query2 = "SELECT lastname FROM personne WHERE idpersonne=" + idpersonne + "";
+		return (String) db.getEntry(query2).get(0).get("lastname");
+	}
+	
+	public static String getPersonFirstname(String username) {
+		Database db = new Database();
+		String query1 = "SELECT idpersonne FROM user WHERE username='" + username + "'";
+		int idpersonne =  Integer.valueOf((String) db.getEntry(query1).get(0).get("idpersonne"));
+		String query2 = "SELECT firstname FROM personne WHERE idpersonne=" + idpersonne + "";
+		return (String) db.getEntry(query2).get(0).get("firstname");
+	}
+	
 	
 	public static void main(String argv[]) {
 		System.out.println(Person.hasFaceRegistered("gorse"));
@@ -66,6 +83,15 @@ public class Person {
 		// TODO Auto-generated method stub
 		Database db = new Database();
 		String query1 = "DELETE FROM personne WHERE idpersonne=" + idPersonne + "";
+		return db.addEntry(query1);
+	}
+	
+	public static boolean modifyPerson(String lastname_, String firstname_ ) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		String query0 = "SELECT idpersonne FROM user WHERE username='" + StaticVariable.connectedUser + "'";
+		int idPersonne = Integer.valueOf((String) db.getEntry(query0).get(0).get("idpersonne"));
+		String query1 = "UPDATE personne SET lastname='" + lastname_ + "', firstname='" + firstname_ + "' WHERE idpersonne='" + idPersonne + "'";
 		return db.addEntry(query1);
 	}
 }

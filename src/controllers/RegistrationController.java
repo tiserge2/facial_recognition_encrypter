@@ -9,6 +9,7 @@ import java.util.Random;
 import modeldb.Person;
 import modeldb.User;
 import utils.PopInformation;
+import utils.StaticVariable;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 //import com.gluonhq.charm.glisten.control.TextField;
@@ -69,8 +70,19 @@ public class RegistrationController {
 	
 	@FXML
 	public void initialize() {
-		passphrase.setText(generatePassPhrase());
-		passphrase.setEditable(false);
+		switch(StaticVariable.registration_state) {
+		case "edit_user":
+			//get infos about the connected user
+			lastname.setText(StaticVariable.connectedUser_lastname);
+			firstname.setText(StaticVariable.connectedUser_fisrtname);
+			passphrase.setText(StaticVariable.connectedUser_passphrase);
+			username.setText(StaticVariable.connectedUser);
+			break;
+		case "create_user":
+			passphrase.setText(generatePassPhrase());
+			passphrase.setEditable(false);
+			break;
+		}
 	}
 	
 	@FXML
@@ -107,18 +119,34 @@ public class RegistrationController {
 				//if password are same ok
 				information.setText("Correct.");
 				if(this.verifyPassphrase()) {
-					if(this.insertPerson() == true) {
-						System.out.println("Person inserted successfully");
-						if(this.insertUser() == true) {
-							System.out.println("User inserted successfully");
-							System.out.println("Closing the window");
-							closeRegistrationWindow();
-							if(hasUser) {
-								PopInformation.showInformation("Success","You have successfully created the user " ,"Information Alert");
-							} else {
-								openLoginWindow();
+					//we have two case, insertion and editing
+					switch(StaticVariable.registration_state) {
+					case "edit_user":
+						if(this.modifyPerson()) {
+							if(this.modifyUser()) {
+								closeRegistrationWindow();
+								StaticVariable.connectedUser = username_;
+								PopInformation.showInformation("Success","You have successfully edited the user " ,"Information Alert");
+							}
+						} else {
+							PopInformation.showInformation("Error","Contact admin " ,"Information Alert");
+						}
+						break;
+					case "create_user":
+						if(this.insertPerson()) {
+							System.out.println("Person inserted successfully");
+							if(this.insertUser()) {
+								System.out.println("User inserted successfully");
+								System.out.println("Closing the window");
+								closeRegistrationWindow();
+								if(hasUser) {
+									PopInformation.showInformation("Success","You have successfully created the user " ,"Information Alert");
+								} else {
+									openLoginWindow();
+								}
 							}
 						}
+						break;
 					}
 				} else {
 					PopInformation.showInformation("Error", "Passphrase needs 16 characters", "Passphrase setup");
@@ -134,6 +162,18 @@ public class RegistrationController {
 		}
 	}
 	
+	private boolean modifyUser() {
+		// TODO Auto-generated method stub
+		System.out.println("Starting modifying user");
+		return User.modifyUser(username_, StaticVariable.connectedUser);
+	}
+	
+	private boolean modifyPerson() {
+		// TODO Auto-generated method stub
+		System.out.println("Starting modifying user");
+		return Person.modifyPerson(last_name, first_name);
+	}
+
 	public void openLoginWindow() throws IOException {
 		URL location = getClass().getResource("/loginForm.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(location);

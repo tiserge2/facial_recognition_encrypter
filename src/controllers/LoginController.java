@@ -50,6 +50,8 @@ public class LoginController {
 			if(verifyCredentials()) {
 				StaticVariable.connectedUser 				= username_;
 				StaticVariable.connectedUser_passphrase		= User.getPassphrase(username_);
+				StaticVariable.connectedUser_lastname		= Person.getPersonLastname(username_);
+				StaticVariable.connectedUser_fisrtname		= Person.getPersonFirstname(username_);
 				closeLoginWindow();
 				openMainWindow();
 			} else {

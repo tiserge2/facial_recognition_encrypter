@@ -106,7 +106,7 @@
                                           </ImageView>
                                        </graphic></Button>
                                     <Separator opacity="0.0" prefHeight="12.0" prefWidth="3.0" />
-                                    <Button minWidth="48.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue;">
+                                    <Button fx:id="editUserButton" minWidth="48.0" mnemonicParsing="false" onAction="#editUser" prefHeight="30.0" prefWidth="55.0" style="-fx-background-color: blue;">
                                        <graphic>
                                           <ImageView fitHeight="29.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

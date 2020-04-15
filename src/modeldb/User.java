@@ -6,6 +6,7 @@ import java.util.Map;
 
 import database.Database;
 import modeldb.Person;
+import utils.StaticVariable;
 
 public class User {
 	public static boolean addUser(String username, String password, String passphrase) {
@@ -64,5 +65,12 @@ public class User {
 		Database db = new Database();
 		String query1 = "SELECT * FROM user";
 		return db.getEntry(query1).size() > 0;
+	}
+
+	public static boolean modifyUser(String new_username_, String old_username_) {
+		// TODO Auto-generated method stub
+		Database db = new Database();
+		String query1 = "UPDATE user SET username='" + new_username_ + "' WHERE username='" + old_username_ + "'";
+		return db.addEntry(query1);
 	}
 }

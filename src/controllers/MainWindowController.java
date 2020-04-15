@@ -76,6 +76,9 @@ public class MainWindowController implements Initializable {
 	@FXML
 	private Button removeUserButton;
 	
+	@FXML 
+	private Button editUserButton;
+	
 	// all the buttons *****
 	
 	@FXML
@@ -118,6 +121,24 @@ public class MainWindowController implements Initializable {
 	private TableColumn<PersonModel, String> hasFace_person;
 	
 	// triggered functions ******8
+	@FXML
+	protected void editUser() throws IOException {
+		System.out.println("pressed editing");
+		if(this.listOfPerson.getSelectionModel().isEmpty()) {
+			PopInformation.showInformation("Error", "Please select the desired user", "Select User");
+		} else {
+			if(checkUserIdentity()) {
+				StaticVariable.registration_state = "edit_user";
+				OpenRegistrationWindow();
+				connectedUser.setText("Connected user: " + StaticVariable.connectedUser);
+				this.listOfPerson.getItems().clear();
+				fillPersonList();
+				this.listOfPerson.refresh();
+			}else {
+				PopInformation.showInformation("Error", "You can't edit another user", "Select User");
+			}
+		}
+	}
 	
 	@FXML 
 	protected void removeUser() throws IOException {
@@ -237,7 +258,7 @@ public class MainWindowController implements Initializable {
 		
 		newWindow.initModality(Modality.APPLICATION_MODAL); 
 //		FeedModelCameraController controller = loader.getController();
-		newWindow.show();
+		newWindow.showAndWait();
 	}
 
 	@FXML
